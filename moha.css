@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Inter:wght@700&display=swap');
+@import "//cdn.jsdelivr.net/npm/font-kopub@1.0";
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'KoPubWorldDotum';
+    box-sizing: border-box;
+  }
+
+a {
+    text-decoration: none;
+    color: #111;
+}
+
+body {
+    background: linear-gradient(249deg, #FFFDC8 0%, #C6EAFF 100%);
+}
+
+section {
+    display: flex;
+    width: 37.5rem;
+    /* height: 202.4375rem; */
+    padding: 2.1875rem 7.5rem 4.375rem 7.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 1.25rem;
+    background: #FFF;
+    margin: 1.81rem auto;
+    gap: 5rem;
+}
+
+p {
+    color: #111;
+    text-align: center;
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+article {
+    width: 22.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.firstinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.name h2 {
+    color: #98C930;
+    text-align: center;
+    font-family: 'Bree Serif';
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.name h5 {
+    color: #CCC;
+    text-align: center;
+    font-family: 'Bree Serif';
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.info {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.info .information h5 {
+    color: #98C930;
+    text-align: right;
+    font-size: 0.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.info .site h5 {
+    color: #111;
+    text-align: left;
+    font-size: 0.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.firstinfo h5 {
+    color: #CCC;
+    text-align: center;
+    font-size: 0.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+
+.secondinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3.75rem;
+}
+
+.frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.frame .title {
+    color: #98C930;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.subtitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.subtitle .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+}
+
+.subtitle .content h4 {
+    color: #98C930;
+    font-family: SUIT-Regular;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+} 
+
+.subtitle .content p {
+    text-align: justify;
+    line-height: 1.125rem; /* 180% */
+    letter-spacing: -0.03438rem;
+}
