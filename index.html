@@ -4,11 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="moha.css" rel="stylesheet">
+    <style type="text/css">* {cursor: url(https://cur.cursors-4u.net/symbols/sym-7/sym635.ani), url(https://cur.cursors-4u.net/symbols/sym-7/sym635.png), auto !important;}</style>
     <title>MOHA</title>
+
+    <script type="text/javascript">
+        // <![CDATA[
+        var colour="#FFEB77"; // in addition to "random" can be set to any valid colour eg "#f0f" or "red"
+        var sparkles=50;
+        
+        /****************************
+        *  Tinkerbell Magic Sparkle *
+        *(c)2005-13 mf2fm web-design*
+        *  http://www.mf2fm.com/rv  *
+        * DON'T EDIT BELOW THIS BOX *
+        ****************************/
+        var x=ox=400;
+        var y=oy=300;
+        var swide=800;
+        var shigh=600;
+        var sleft=sdown=0;
+        var tiny=new Array();
+        var star=new Array();
+        var starv=new Array();
+        var starx=new Array();
+        var stary=new Array();
+        var tinyx=new Array();
+        var tinyy=new Array();
+        var tinyv=new Array();
+        
+        window.onload=function() { if (document.getElementById) {
+          var i, rats, rlef, rdow;
+          for (var i=0; i<sparkles; i++) {
+            var rats=createDiv(3, 3);
+            rats.style.visibility="hidden";
+            rats.style.zIndex="999";
+            document.body.appendChild(tiny[i]=rats);
+            starv[i]=0;
+            tinyv[i]=0;
+            var rats=createDiv(5, 5);
+            rats.style.backgroundColor="transparent";
+            rats.style.visibility="hidden";
+            rats.style.zIndex="999";
+            var rlef=createDiv(1, 5);
+            var rdow=createDiv(5, 1);
+            rats.appendChild(rlef);
+            rats.appendChild(rdow);
+            rlef.style.top="2px";
+            rlef.style.left="0px";
+            rdow.style.top="0px";
+            rdow.style.left="2px";
+            document.body.appendChild(star[i]=rats);
+          }
+          set_width();
+          sparkle();
+        }}
+        
+        function sparkle() {
+          var c;
+          if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+            ox=x;
+            oy=y;
+            for (c=0; c<sparkles; c++) if (!starv[c]) {
+              star[c].style.left=(starx[c]=x)+"px";
+              star[c].style.top=(stary[c]=y+1)+"px";
+              star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+              star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+              star[c].style.visibility="visible";
+              starv[c]=50;
+              break;
+            }
+          }
+          for (c=0; c<sparkles; c++) {
+            if (starv[c]) update_star(c);
+            if (tinyv[c]) update_tiny(c);
+          }
+          setTimeout("sparkle()", 40);
+        }
+        
+        function update_star(i) {
+          if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+          if (starv[i]) {
+            stary[i]+=1+Math.random()*3;
+            starx[i]+=(i%5-2)/5;
+            if (stary[i]<shigh+sdown) {
+              star[i].style.top=stary[i]+"px";
+              star[i].style.left=starx[i]+"px";
+            }
+            else {
+              star[i].style.visibility="hidden";
+              starv[i]=0;
+              return;
+            }
+          }
+          else {
+            tinyv[i]=50;
+            tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+            tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+            tiny[i].style.width="2px";
+            tiny[i].style.height="2px";
+            tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+            star[i].style.visibility="hidden";
+            tiny[i].style.visibility="visible"
+          }
+        }
+        
+        function update_tiny(i) {
+          if (--tinyv[i]==25) {
+            tiny[i].style.width="1px";
+            tiny[i].style.height="1px";
+          }
+          if (tinyv[i]) {
+            tinyy[i]+=1+Math.random()*3;
+            tinyx[i]+=(i%5-2)/5;
+            if (tinyy[i]<shigh+sdown) {
+              tiny[i].style.top=tinyy[i]+"px";
+              tiny[i].style.left=tinyx[i]+"px";
+            }
+            else {
+              tiny[i].style.visibility="hidden";
+              tinyv[i]=0;
+              return;
+            }
+          }
+          else tiny[i].style.visibility="hidden";
+        }
+        
+        document.onmousemove=mouse;
+        function mouse(e) {
+          if (e) {
+            y=e.pageY;
+            x=e.pageX;
+          }
+          else {
+            set_scroll();
+            y=event.y+sdown;
+            x=event.x+sleft;
+          }
+        }
+        
+        window.onscroll=set_scroll;
+        function set_scroll() {
+          if (typeof(self.pageYOffset)=='number') {
+            sdown=self.pageYOffset;
+            sleft=self.pageXOffset;
+          }
+          else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+            sdown=document.body.scrollTop;
+            sleft=document.body.scrollLeft;
+          }
+          else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+            sleft=document.documentElement.scrollLeft;
+            sdown=document.documentElement.scrollTop;
+          }
+          else {
+            sdown=0;
+            sleft=0;
+          }
+        }
+        
+        window.onresize=set_width;
+        function set_width() {
+          var sw_min=999999;
+          var sh_min=999999;
+          if (document.documentElement && document.documentElement.clientWidth) {
+            if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+            if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+          }
+          if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+            if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+            if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+          }
+          if (document.body.clientWidth) {
+            if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+            if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+          }
+          if (sw_min==999999 || sh_min==999999) {
+            sw_min=800;
+            sh_min=600;
+          }
+          swide=sw_min;
+          shigh=sh_min;
+        }
+        
+        function createDiv(height, width) {
+          var div=document.createElement("div");
+          div.style.position="absolute";
+          div.style.height=height+"px";
+          div.style.width=width+"px";
+          div.style.overflow="hidden";
+          return (div);
+        }
+        
+        function newColour() {
+          var c=new Array();
+          c[0]=255;
+          c[1]=Math.floor(Math.random()*256);
+          c[2]=Math.floor(Math.random()*(256-c[1]/2));
+          c.sort(function(){return (0.5 - Math.random());});
+          return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+        }
+        // ]]>
+        </script>
 </head>
 <body>
-    <section>
+    <section class="first">
         <article class="firstinfo">
+            <div>
+                <img src="@Mingsu_mi.png">
+                <p class="source">CREPE @Mingsu_mi</p>  
+            </div>
+
             <div class="name">
                 <h2>MOHA</h2>
                 <h5>@PRIN__KO</h5>
@@ -17,15 +222,17 @@
             <div class="info">
                 <div class="information">
                     <h5>공계</h5>
+                    <h5>블루스카이</h5>
                     <h5>크레페</h5>
                     <h5>오픈 카톡</h5>
                     <h5>메일</h5>
                 </div>
 
                 <div class="site">
-                    <h5><a href="https://twitter.com/N4H33_S2?s=20">@N4H33_S2</a></h5>
-                    <h5><a href="https://kre.pe/SyCI">crepe.cm/@N4H33_S2</a></h5>
-                    <h5><a href="https://open.kakao.com/me/hitfho">open.kakao.com/me/hitfho</a></h5>
+                    <h5><a href="https://twitter.com/N4H33_S2?s=20" target="_blank">@N4H33_S2</a></h5>
+                    <h5><a href="https://bsky.app/profile/n4h33.bsky.social" target="_blank">@n4h33</a></h5>
+                    <h5><a href="https://kre.pe/SyCI" target="_blank">crepe.cm/@N4H33_S2</a></h5>
+                    <h5><a href="https://open.kakao.com/me/hitfho" target="_blank">open.kakao.com/me/hitfho</a></h5>
                     <h5>nahee.cm@gmail.com</h5>
                 </div>
             </div>
@@ -34,236 +241,367 @@
 
             <p>성인 여성. 닉네임은 편한대로 불러주세요. 완전히 다른 이름만 아니라면 뭐라고 불러도 OK. 용건은 직멘, DM, 오픈카톡 다 괜찮아요.</p>
 
-            <h5>25.06.01 최종 수정</h5>
+            <h5>25.06.18 최종 수정</h5>
         </article>
+    </section>
+
+    <section class="second">
+        <div class="tab-wrapper">
+            <nav class="tab-menu">
+                <button class="tab-button active" data-tab="0">MOHA</button>
+                <button class="tab-button" data-tab="1">TWEET</button>
+                <button class="tab-button" data-tab="2">LIKE&HATE</button>
+                <button class="tab-button" data-tab="3">COMMU</button>
+                <button class="tab-button" data-tab="4">CHARACTER</button>
+              <!-- 탭이 더 생길 경우 아래에 추가 -->
+            </nav>
+          </div>
 
         <article class="secondinfo">
-            <div class="frame">
-                <div class="title">
-                    <h4>MOHA</h4>
-                </div>
+            <div class="slider-wrapper">
+                <div class="tab-contents">
+                    <div class="frame" id="moha">
+                        <div class="subtitle">
 
-                <div class="subtitle">
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p><a href="https://docs.google.com/spreadsheets/d/11w09hR4CA-EIc7DLgIRE_T99ve1etff1Hy6PloNPIyA/edit?usp=sharing">앤관오 성향표 바로가기</a></p>
-                    </div>
+                            <div class="content">
+                                <h4>♡ MOHA</h4>
+                                <p><span class="highlighter"><b>디자인</b></span>, 그림, 글 등
+                                    <br>DM 보다는 <b>오픈카톡</b>을 더 선호합니다.
+                                    <br><span class="highlighter">HL>GL>BL</span> 다만 커뮤는 ALL 위주로 가요.
+                                    <br>성향상 직멘(언급)을 잘 못하고, 뉴짤을 그려도 보내고 바로 삭제하기도 합니다…. 
+                                </p>
+                            </div>
 
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>비계 트친소 안 합니다. 제가 먼저 부탁드리지 않는 이상 잘 안 해요. 타 오너님께서 찾으실 경우 저한테 먼저 연락 주세요.</p>
-                    </div>
+                            <div class="content">
+                                <h4>♡ 앤관오 성향표</h4>
+                                <p><i><a href="https://docs.google.com/spreadsheets/d/11w09hR4CA-EIc7DLgIRE_T99ve1etff1Hy6PloNPIyA/edit?usp=sharing" target="_blank">바로가기</a></i></p>
+                            </div>
 
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>커뮤 열어주세요~ ◁ 언급 OK! 다만 너무 구체적으로 자주 언급하면 무척이나 스트레스 받아 합니다. 실제로 몇 년 전 해당 건으로 스트레스를 너무 받는 바람에 해결해보겠다고 꾸역꾸역 열었는데 열어달라 요청했던 사람들의 4/5가 신청서도 제출하지 않은 경험이 있어서… 별로 안 좋아합니다…. 제가 확실하게 안 된다고 했을 경우 자주 언급하지 말아주세요. 1~2번 가지고 스트레스 안 받습니다. 지나치게 자주 여러 사람이 했을 경우에만 힘들어해요.
-                        </p>
-                    </div>
+                            <div class="content">
+                                <h4>♡ 자캐 썰</h4>
+                                <p>자캐 썰 잘 안 푸는 편인 것 같아요…. 님캐 썰을 더 열심히 풉니다…. 그래도 뭐가 궁금하다 말하면 최대한 고민해봅니다. <span class="highlighter">다만 일방적으로 푸는 건 안 좋아합니다.</span> 가는 게 있으면 오는 게 있고… 해야하지 않나요? -//- 물론 오는 게 있으면 보답하려고 많이 노력합니다.
+                                    <br>더불어 맨날 자캐 자요, 잘 모르겠어요, 같은 느낌으로 답변해도 적당히 애정하고 있습니다…. 너무 곧이곧대로 믿지 않으셨으면 좋겠어요.<br>
+                                  </p>
+                            </div>
 
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>TRPG 정말 좋아하는 친구가 생기면 종종 부탁드리는 편이긴 하나… 기본적으로 잘 안 갑니다. 집중력이 낮은 편이고 쉽게 지루함을 느끼는 사람이라 책상 앞에 3시간 앉아서 역극만 하는 상황에 지루함을 느껴요. TRPG 하다 말고 트위터 돌아다니고 그럽니다…. 그럼에도 제안 주시면 감사히 가겠습니다! COC만 가봤고 룰북 소지하고 있어요. GM 몇 번 해보았습니다.</p>
-                    </div>
+                            <div class="content">
+                                <h4>♡ 페어 챙기기</h4>
+                                <p>페어틀, 커미션, 이메레스, 합작, 시트 등등 너무너무 좋아합니다.
+                                    <br>그런데 이제 게으름을 동반한…. 제가 먼저 제안 드리는 경우도 몇 있고, 제안 주시면 열심히 찾아보고 열심히 편집하니 편하게 언급해주세요. ^//^<br>
+                            </div>
 
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>페어틀, 커미션, 이메레스, 합작 등등 너무너무 좋아하는데 자주 안 합니다. 가짜 커뮤러라… 그래도 제가 먼저 제안 드리는 경우도 몇 있고, 제안 주시면 열심히 찾아보고 열심히 편집하니 편하게 언급해주세요. ^//^<br>
-                            자캐 썰 잘 안 푸는 편인 것 같아요…. 님캐 썰을 더 열심히 풉니다…. 그래도 뭐가 궁금하다 말하면 최대한 고민해봅니다. 더불어 맨날 자캐 자요, 자캐 죽었어요, 같은 느낌으로 답변해도 자캐 애정하고 있습니다…. 너무 곧이곧대로 믿지 않으셨으면 좋겠어요.<br>
-                            <b>합앤 안 합니다!</b> 제안 주지 마세요. 저도 제안하지 않습니다. - 요즘 합앤의 정의가… 굉장히 애매한 것 같더라구요? <b>제가 말하는 합앤</b>: 서로 관캐 아님, 캐합 좋은데 걍 앤캐나 하죠?(가벼움) 입니다…. 서로 관캐인 거 밝히고 하는 앤캐는 합앤 아니라고 생각하고 있어요! 다만 용기가 없어서 먼저 관캐라고 잘 못 밝히는 편입니다….
-                        </p>
-                    </div>
+                            <div class="content">
+                                <h4>♡ TRPG</h4>
+                                <p>정말 좋아하는 친구가 생기면 종종 부탁드리는 편이긴 하나… 기본적으로 잘 안 갑니다. 집중력이 낮은 편이고 쉽게 지루함을 느끼는 사람이라 책상 앞에 3시간 앉아서 역극만 하는 상황에 지루함을 느껴요. TRPG 하다 말고 트위터 돌아다니고 그럽니다….
+                                    <br>그럼에도 제안 주시면 감사히 가겠습니다! COC만 가봤고 룰북 소지하고 있어요. GM 몇 번 해보았습니다.</p>
+                            </div>
 
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>커뮤 러닝 후에는 기본적으로 정말 마음이 맞다고 생각되는 극소수 인원만 데려오고 있습니다. 그렇기에 앞서 언급 드렸지만 겹지인, 징검다리 요청 안 받습니다.<br>
-                            탐라 내 소수 인원을 지향하고 있기 때문에 팔로 50 이하를 유지하고 있습니다.
-                        </p>
-                    </div>
-                    
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>이별은 블언블로 부탁드려요. 저도 악감정이 있는 게 아닌 이상, 블언블로 이별합니다. 별 감정 없이 교류 없는 분, 계이계 등은 팔로 정리로 블언블 하기도 해요.<br>
-                            제게 불편한 점이 생겼다면, 부디 꼭 연락 주셨으면 좋겠어요. 굳이 참지 않으셔도 괜찮습니다. 제가 더 나은 사람이 될 수 있도록 도와주세요.
-                        </p>
-                    </div>
+                            <div class="content">
+                                <h4>♡ 합앤</h4>
+                                <p><span class="highlighter"><b>안 합니다!</b> 제안 주지 마세요.</span> 저도 제안하지 않습니다.
+                                    <br>- 요즘 합앤의 정의가… 굉장히 애매한 것 같더라구요? <b>제가 말하는 합앤</b>: 서로 관캐 아님, 캐합 좋은데 걍 앤캐나 하죠?(가벼움) 입니다…. 서로 관캐인 거 밝히고 하는 앤캐는 합앤 아니라고 생각하고 있어요! 다만 용기가 없어서 먼저 관캐라고 잘 못 밝히는 편입니다….
+                                </p>
+                            </div>
 
+                            <div class="content">
+                                <h4>♡ 커뮤 운영 관련</h4>
+                                <p>커뮤 열어주세요~ ◁ 언급 OK!
+                                    <br>다만 너무 구체적으로 자주 언급하면 무척이나 스트레스 받아 합니다. 실제로 몇 년 전 해당 건으로 스트레스를 너무 받는 바람에 해결해보겠다고 꾸역꾸역 열었는데 열어달라 요청했던 사람들의 4/5가 신청서도 제출하지 않은 경험이 있어서… 별로 안 좋아합니다….
+                                    <br>제가 확실하게 안 된다고 했을 경우 자주 언급하지 말아주세요. 1~2번 가지고 스트레스 안 받습니다. 지나치게 자주 여러 사람이 했을 경우에만 힘들어해요.
+                                </p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 팔로 관련</h4>
+                                <p>커뮤 러닝 후에는 기본적으로 정말 마음이 맞다고 생각되는 극소수 인원만 데려오고 있습니다.
+                                    <br>탐라 내 소수 인원을 지향하고 있기 때문에 <span class="highlighter">팔로 50~60 이하를 유지</span>하고 있습니다.
+                                    <br>교류가 없고, 잘 들어오지 않는다고 판단되는 계정 등은 팔로 정리로 블언블 하기도 합니다. 블락이 아닌 이상 큰 의미는 없으니 다시 팔로 주시면 받습니다.
+                                    <br><b>비계 트친소 안 합니다.</b> 제가 먼저 부탁드리지 않는 이상, 타 오너님께서 찾으실 경우 저한테 먼저 연락 주세요.
+                                </p>
+                            </div>
+                                                        
+
+                            <div class="content">
+                                <h4>♡ 이별</h4>
+                                <p><span class="highlighter">이별은 블언블로 부탁드려요.</span> 저도 악감정이 있는 게 아닌 이상, 블언블로 이별합니다.<br>
+                                    제게 불편한 점이 생겼다면, 부디 꼭 연락 주셨으면 좋겠어요. 굳이 참지 않으셔도 괜찮습니다. 제가 더 나은 사람이 될 수 있도록 도와주세요.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="frame" id="tweet">
+
+                        <div class="subtitle">
+                            <div class="content">
+                                <h4>♡ 트훔</h4>
+                                <p>트훔 50%, 수제 트윗 50% 일 정도로 <span class="highlighter"><b>트훔을 많이 합니다.</b></span>
+                                    <br>트훔 싫어하시는 분은 기억하고 안 하고 있으나… 제가 놓쳤다면 꼭! 말씀해주세요. 하지 않습니다.
+                            </div>
+
+                            <div class="content">
+                                    <h4>♡ 트윗</h4>
+                                    <p>일단 커뮤계이기에 거의 안 하긴 하나, <i>일상, 셀털, 아무말, 관심사 인용, 남돌(엑소)&야구(야구선수)</i> 언급을 종종 합니다.
+                                        <br>현실 남자를 좋아하지 않는 분이 많아 최대한 자제하고 있으며, 아주 종종 인용할 때 있어요. (대부분 야구선수.)
+                                    </p>
+                                </div>
+
+                            <div class="content">
+                                <h4>♡ 알티&마음</h4>
+                                <p><span class="highlighter">타임라인 내 알티를 전부 꺼둡니다.</span> 저도 알티 안 해요. 인용트 제외 들어오는게 없기 때문에 직알이 어쩌구~ 하면 궁금해서 자주 님의 탐라를 훔쳐봅니다…. 나쁜 의미는 없어요….
+                                    <br>위의 이유와 추천탐라를 자주 보기 때문에 nn시간 전 트윗에도 답멘 달고 합니다. 별 생각 없이 하니까 너무 놀라지 말아주세요.
+                                    <br>마음 잘 안 눌러요.
+                                </p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 알림</h4>
+                                <p>요즘 트위터가 통 이상하더군요…. 알림을 씹어 먹거나 오지 않는 경우가 많아 종종 알림을 놓칠 때가 있어요. 다시 언급해주시면 달려갑니다! 제 멘션은 급하거나 중요한 거 아닌 이상 굳이 언급 안 해드려요.</p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 단어뮤트 추천</h4>
+                                <p><b>남돌</b> / <b>야선</b> / 변백현 / 도경수 / 백도 / 백현 / 경수 / 디오 / <b>엑소</b> / 랜더스 / 쓱 / 최지훈 / 박성한 / 김정민 / 그때 그때 유행하는 것들</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frame" id="likehate">
+                        <div class="like">
+          
+                            <div class="subtitle">
+                                <div class="content">
+                                    <h4>♡ LIKE</h4>
+                                    <p><b>야구</b>, <b>커뮤</b>, 로맨스 장르, 웹툰, 강아지 영상, 인디 음악, 쿠키런 등</p>
+                                </div>
+            
+                                <div class="content">
+                                    <h4>♡ 야구</h4>
+                                    <p>야구 언급은 최대한 타 계정에서만 하고 있으나 이 타임라인에도 야구를 좋아하는 지인분들이 꽤 있어서 종종 합니다.
+                                        <br>타 팀이면 그나마 괜찮은데, 제가 응원하는 팀을 직접적으로 욕하고 시비거는 트윗 굉장히 난감해요. 저도 안 합니다. 서로 배려하도록 해요.
+                                        <br><span class="highlighter">겨우 내는 시간에는 제가 좋아하는 일을 하고 싶어합니다.</span> 제가 야구 보러 다니는 거에 대해 그만 좀 가라, 야구장에서 사냐, 너 그거 중독이다 등등 말하면 너무너무 화가 납니다. 제발 존중 해주세요. 우리 서로 좋아하는 것만 보고 살아요.</p>
+                                </div>
+            
+                                <div class="content">
+                                    <h4>♡ 커뮤&로맨스 장르</h4>
+                                    <p>커뮤 뛰는 거 좋아합니다…. 인만추는 지인들한테 캐 뜯어내는 것만 가능, <span class="highlighter">사람끼리의 인만추 안 좋아합니다….</span> (탐넘 지인 연결 등)
+                                        <br>순정 만화, 로맨스 드라마, 로맨스 판타지 웹툰 등등 자주 빠질 때가 있습니다. 언급 종종 있어요.
+                                    </p>
+                                </div>
+
+                                <div class="content">
+                                    <h4>♡ 그 외</h4>
+                                    <p>요즘 인디 음악을 정말 많이 들어요. 추천해 주시면 감사히 받아갑니다…. (추천 취향: 음율, 달담, 김마리, 백아, 오월오일… 아 너무 많다….)
+                                        <br>밴드 음악도 정말 좋아하는데, 하드록 장르보다는 적당히 신나는 정도가 좋습니다. (추천 취향: 원위, 루시, 유다빈밴드, 터치드 등)
+                                        <br>쿠키런 오븐브레이크: 유일하게 하는 게임이라 언급할 수도 있습니다.
+                                        <br>(주절) 뱅드림 국내 서버가 돌아오긴 할까요…. 요즘 자주 그립네요….
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hate">
+            
+                            <div class="subtitle">
+                                <div class="content">
+                                    <h4>♡ HATE</h4>
+                                    <p><span class="highlighter">예의 문제</span>, 제 캐로 하는 TS, 논란 장르, 비윤리적인 요소, 고어, 저작권 문제가 있는 AI 등</p>
+                                </div>
+            
+                                <div class="content">
+                                    <h4>♡ 예의&개인정보 관련</h4>
+                                    <p>반말에 예민한 편은 아니지만, 반말하는 친한 사이라도 <span class="highlighter"><b>너</b>라고 부르는 거 <b>정말 너무 싫어</b>합니다. <b>너라고 부르지 말고 닉네임으로 불러</b>주세요.</span> 님자는 꼭 안 붙여도 괜찮아요.
+                                        <br>예의 관련 꼰대 기질이 좀 심해서(;) 언니에게 너너 거리는 거, 당사자에게 중요한데도 불구하고 의견 묻지도 않고 무언가 정하는 거, 약속 당일 파토 등등 굉장히 싫어합니다. 최대한 티 안 내려고 노력하는데 불편해 할 수도 있어요.
+                                        <br>실친 아니라면 제 이름 알아도 <b>이름으로 부르지 말아</b>주세요. 정말 싫어합니다. <span class="highlighter">이름뿐만 아니라 제가 티내지 않은 <b>개인정보를 먼저 아는 척하지 말아</b>주세요.</span></p>
+                                </div>
+                                
+                                <div class="content">
+                                    <h4>♡ TS&고어 관련</h4>
+                                    <p>TS는 제 캐로 보고 싶다 등의 언급만 아니라면 괜찮아요. 그 외 님캐 TS나 2차 TS 등등 다 괜찮습니다.
+                                       <br>비윤리적인 요소라면 모든 걸 다 거부감 느껴합니다. 저한테 직접적으로 언급하지 말아주세요.
+                                       <br><span class="highlighter">자세한 묘사를 하는 고어를 못봅니다.</span> 피가 어떻고, 어떻게 상처가 났고 등등, 너무 자세한 묘사면 제가 아파하는 사람이라 아예 불가합니다. 자세한 묘사를 최대한 제하고 있는 그대로 사실만 묘사한 정도라면 괜찮아요. (EX. 머리가 잘렸다, 손가락이 베였다.)</p>
+                                </div>
+            
+                                <div class="content">
+                                    <h4>♡논란 장르</h4>
+                                    <p>극우, 여혐, 성매매, 혐한 등의 논란 장르 정말 혐오합니다. 해당 장르를 좋아한다고 하여 비판하려는 의사는 없어요. 그냥 제가 좋아하지 않는 논란 장르임을 명시하는 것일뿐. 계속 좋아하셔도 괜찮아요. 해당 건으로 블락이나 블언블 안 합니다. 서로 즐거운 취미 생활해요!
+                                        <br>장르 목록: 요아소비(우익), 요루시카(성매매), 나의 히어로 아카데미아(마루타), 최애의 아이(미성년자 성관계), 귀멸의 칼날(우익), 진격의 거인(우익) 등등…
+                                        <br>탐라에서 보이면 눈쌀 찌푸립니다만… 누구를 저격하려는 의사는 전혀 없고, 탐라에 들어오면 종종 싫어한다고 언급하기도 해요. <span class="highlighter">트친분들 좋아하시는 건 아예 언급 자체를 안 합니다! 다만 제게 <b>직멘</b>하지 말아주세요.</span></p>
+                                </div>
+            
+                                <div class="content">
+                                    <h4>♡ AI 관련</h4>
+                                    <p>AI로 그린 그림, AI로 만든 목소리 커버 등 <b>저작권</b>에 문제가 될 수 있는 부분에 대해서 민감합니다. AI 자체를 싫어하지는 않아요. 저도 앞으로 AI로 먹고 살아야 하는 사람이라….
+                                        </p>
+                                </div>
+
+                                <div class="content">
+                                    <h4>♡ 그 외</h4>
+                                    <p>일베 밈, 혐오 트윗, 성기에 빗댄 혐오 표현, 벌레의 실사 이미지, 성희롱 발언
+                                        <br>누가봐도 좀 심각할 정도의 너무너무 심한 욕설은 보기 꺼려합니다.
+                                        </p>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="frame" id="commu">
+
+                        <div class="subtitle">
+                            <div class="content">
+                                <h4>♡ 커뮤 성향</h4>
+                                <p>트위터 커뮤니티 ONLY. <b>여캐 주력</b>. 마지막 남캐가 20년도 5월이네요…. 요즘은 트위터 오류가 많아 마스토돈까지는 어찌 저찌 도전해볼 계획입니다만…. (이 현재 상황.)
+                                    <br>일상 힐링 청춘 성장 주력으로 뜁니다. 플러팅 커뮤 무진장 좋아합니다. 제가 좋아하는 장르 기반 커뮤 환장합니다. 시리커 합격률이 무지 낮은데… 같이 가주세요.</p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 선관 관련</h4>
+                                <p>같이 뛰자고 말씀해주시면 최대한 일정 고려해 확답 드립니다. 같이 가겠다고 마음 먹었으면 열심히 준비해요. 같이 가요~ ◁ 좋아하니 언제든 언급 OK. 선관 좋아하는데 요즘 선관 가능한 커뮤가 적고 페어커가 유행하는 것 같더군요…. 같이 열심히 준비해봅시다….</p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 오너 성향</h4>
+                                <p><span class="highlighter">오너끼리 안 맞으면 캐 서사가 어떻든 안 맞다고 생각합니다.</span>
+                                    <br>서사충까지는 아닌데, 러닝 중 대화가 0인데 갑작스러운 계약관계 당황스러워합니다…. 오너끼리 웬만큼 친해지지 않은 이상(연공 후 대화를 조금 나눠봤다면 친한 거지요^0^) 계연 등의 계약 관계는 제안 주시지 않는 편이 좋아요. 오너끼리 친해진 후라면 어떠한 날조도 다 쳐먹습니다…. 제가 먼저 제안하기도 합니다. 불편하다면 말씀해주세요.</p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 드린 연성 관련</h4>
+                                <p>제가 드린 그림, 글, 커미션 등은 저랑 계속 연락을 하고 지내는 사이라면 <span class="highlighter">언제 어디서든 편하게 저장하고 업로드 하셔도 괜찮아요.</span> (다만 n년 전 그림만큼은 조금….)   
+                                    <br><b>저랑 연락이 끊겼다면, 제가 드린 모든 작업물은 사용하지 말아주세요.</b> 정당하게 돈을 주고 받은 커미션의 경우에만 업로드 합니다. 앞서 말씀 드린 것들, 저 역시 그렇게 하고 있으니 혹시 불편하시다면 말씀해주세요.</p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 연공 관련</h4>
+                                <p>커뮤 러닝 후 연공은 연공계에서 합니다. 이후 본계로 사람 많이 안 데려와요. 최대 3명 정도….
+                                    <br>최종적으로 연공하지 않은 캐릭터들과 징검다리로 어찌저찌 함께 커미션 넣는 건 무척 좋아하는데, 제 본계정을 알리고 싶지 않으니 <span class="highlighter">저를 포함한 DM방 생성은 조심해주세요.</span></p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 캐릭터 신청서</h4>
+                                <p>러닝이 끝난 후 모든 캐릭터 신청서는 공유 금지로 변경해둡니다. 다시 보고 싶으시다면 편하게 말씀해주세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frame" id="character">
+                        <div class="subtitle">
+                            <div class="content">
+                                <h4>♡ 캐릭터 정리 백업</h4>
+                                <p><a href="https://docs.google.com/document/d/1DNcl2mwDtCDKwStWjejDJ7soFV5TQtKKp3sxy4fmSc4/edit?usp=sharing" target="_blank">자세한 러닝 목록은 이쪽</a><br>
+                                    <a href="https://docs.google.com/document/d/1vxG_RdOzKi-SgFj8HSmUtKVIxFdTlLya-LcZ6F4x94M/edit?usp=sharing" target="_blank">캐릭터 생일 정리는 이쪽</a><br>
+                                    <a href="http://drive.google.com/uc?export=view&id=1kss3q_XIC5O97D3MSGiSjkhc1OMJcjP0" target="_blank">자캐 정리는 이쪽 (임시)</a> 2022.12.09에 수정함<br>
+                                    <a href="https://docs.google.com/spreadsheets/d/1rPqv3Cws9K1YVt6qg2-u-sY7GcrbaHUGuXpoxRQrj8E/edit?usp=sharing"  target="_blank">페어 정리 시트</a>잠시 비공개 상태
+                                </p>
+
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 하단 정리 기준</h4>
+                                <p>관계가 있고, 자주 언급하는 캐릭터만 정리해두었습니다.</p>
+                            </div>
+
+                            <div class="content">
+                                <h4>♡ 캐릭터 및 관계</h4>
+                                <p>
+                                    우리가 함께했던 여름   ::   아오노 하나비 ( 💚❤️💚 나오에 아카네 )<br>
+                                    다섯번째 계절   ::   나츠 아오이 ( 💙💛 센자키 유우신 )<br>
+                                    겨울, 끝자락   ::   하나미 시즈카<br>
+                                    로망스키   ::   히토츠하라 카요<br>
+                                    스텝과 블룸   ::   에노사키 세리나<br>
+                                    하계생존특강   ::   유사유
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-            <div class="frame">
-                <div class="title">
-                    <h4>TWEET</h4>
-                </div>
-
-                <div class="subtitle">
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>일상, 셀털, 아무말, 트훔, 관심사 인용, 남돌(엑소)&야구(야구선수) 언급 굉장히 많습니다.<br>
-                            현실 남자를 좋아하지 않는 분이 많아 최대한 자제하고 있으나… 가끔 인용할 때 있어요.(남돌은 거의 안 함.)</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>타임라인 내 알티를 전부 꺼둡니다. 저도 알티 안 해요. 인용트 제외 들어오는게 없기 때문에 직알이 어쩌구~ 하면 궁금해서 자주 님의 탐라를 훔쳐봅니다…. 나쁜 의미는 없어요….<br>
-                            위의 이유와 추천탐라를 자주 보기 때문에 nn시간 전 트윗에도 마음 누르고 답멘 달고 합니다. 별 생각 없이 하니까 너무 놀라지 말아주세요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>트위터가 알림을 씹어 먹는 경우가 많아 종종 알림을 놓칠 때가 있어요. 다시 언급해주시면 달려갑니다! 제 멘션은 급하거나 중요한 거 아닌 이상 굳이 언급 안 해드려요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>단뮤 추천: <b>남돌</b> / <b>야선</b> / 변백현 / 도경수 / 백도 / 백현 / 경수 / 디오 / <b>엑소</b> / 랜더스 / 쓱 / 최지훈 / 박성한 / 김정민</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="frame">
-                <div class="title">
-                    <h4>LIKE</h4>
-                </div>
-
-                <div class="subtitle">
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>야구, 커뮤, 로맨스 장르, 웹툰 등</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>야구 언급은 최대한 타 계정에서만 하고 있으나 이 타임라인에도 야구를 좋아하는 지인분들이 꽤 있어서 종종 합니다. 타 팀이면 그나마 괜찮은데, 제가 응원하는 팀을 직접적으로 욕하고 시비거는 트윗 굉장히 난감해요. 저도 안 합니다. 서로 배려하도록 해요.<br>
-                            겨우 내는 시간에는 제가 좋아하는 일을 하고 싶어합니다. 제가 야구 보러 다니는 거에 대해 그만 좀 가라, 야구장에서 사냐, 너 그거 중독이다 등등 말하면 너무너무 화가 납니다. 제발 존중 해주세요. 우리 서로 좋아하는 것만 보고 살아요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>커뮤 뛰는 거 좋아합니다…. 인만추는 지인들한테 캐 뜯어내는 것만 가능, 사람끼리의 인만추 안 좋아합니다…. (탐넘 지인 연결 등)<br>
-                            순정 만화, 로맨스 드라마 등등 너무너무 좋아합니다. 언급 종종 있어요.<br>
-                            BL 웹툰 정말 많이 봅니다…. 탐라에서 언급 많이 안 하는데 아예 안 하지는 않아 덧붙입니다.</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="frame">
-                <div class="title">
-                    <h4>HATE</h4>
-                </div>
-
-                <div class="subtitle">
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>예의 문제, 제 캐로 하는 TS, 논란 장르, 비윤리적인 요소, 고어, 저작권 문제가 있는 AI 등</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>반말에 예민한 편은 아니지만, 반말하는 친한 사이라도 <b>너</b>라고 부르는 거 <b>싫어</b>합니다. 너라고 부르지 말고 닉네임으로 불러주세요. 님자는 꼭 안 붙여도 괜찮아요.<br>
-                            실친 아니라면 제 이름 알아도 이름으로 부르지 말아주세요. 정말 싫어합니다. 이름뿐만 아니라 제가 티내지 않은 개인정보를 먼저 아는 척하지 말아주세요.</p>
-                    </div>
-                    
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>TS는 제 캐로 보고 싶다 등의 언급만 아니라면 괜찮아요. 그 외 님캐 TS나 2차 TS 등등 다 괜찮습니다.<br>
-                            비윤리적인 요소라면 모든 걸 다 거부감 느껴합니다. 저한테 직접적으로 언급하지 말아주세요.<br>
-                            자세한 묘사를 하는 고어를 못봅니다. 피가 어떻고, 어떻게 상처가 났고 등등, 너무 자세한 묘사면 제가 아파하는 사람이라 아예 불가합니다. 자세한 묘사를 최대한 제하고 있는 그대로 사실만 묘사한 정도라면 괜찮아요. (EX. 머리가 잘렸다, 손가락이 베였다.)</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>논란 장르 정말 혐오합니다. 해당 장르를 좋아한다고 하여 비판하려는 의사는 없어요. 그냥 제가 좋아하지 않는 논란 장르임을 명시하는 것일뿐. 계속 좋아하셔도 괜찮아요. 해당 건으로 블락이나 블언블 안 합니다. 서로 즐거운 취미 생활해요!<br>
-                            장르 목록: 요아소비(우익), 요루시카(성매매), 나의 히어로 아카데미아(마루타), 최애의 아이(미성년자 성관계), 귀멸의 칼날(우익) 등등… 우익, 성매매, 여혐, 혐한 논란 있는 장르 다 안 좋아합니다.<br>
-                            탐라에서 보이면 눈쌀 찌푸립니다…. 누구를 저격하려는 의사는 전혀 없고, 탐라에 들어오면 종종 싫어한다고 언급하기도 해요. 트친분들 좋아하시는 건 아예 언급 자체를 안 합니다! 다만 제게 <b>직멘</b>하지 말아주세요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>AI로 그린 그림, AI로 만든 목소리 커버 등 <b>저작권</b>에 문제가 될 수 있는 부분에 대해서 민감합니다. AI 자체를 싫어하지는 않아요. 저도 앞으로 AI로 먹고 살아야 하는 사람이라….<br>
-                            너무너무 심한 욕설은 보기 꺼려합니다.</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="frame">
-                <div class="title">
-                    <h4>COMMU</h4>
-                </div>
-
-                <div class="subtitle">
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>트위터 커뮤니티 ONLY. 여캐 주력. 마지막 남캐가 20년도 5월이네요…. 요즘은 트위터 오류가 많아 마스토돈까지는 어찌 저찌 도전해볼 계획입니다만…. (이 현재 상황.)<br>
-                            일상 힐링 청춘 성장 주력으로 뜁니다. 플러팅 커뮤 무진장 좋아합니다. 제가 좋아하는 장르 기반 커뮤 환장합니다. 시리커 합격률이 무지 낮은데… 같이 가주세요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>같이 뛰자고 말씀해주시면 최대한 일정 고려해 확답 드립니다. 같이 가겠다고 마음 먹었으면 열심히 준비해요. 같이 가요~ ◁ 좋아하니 언제든 언급 OK. 선관 좋아하는데 요즘 선관 가능한 커뮤가 적지 않나요? 같이 열심히 준비해봅시다….</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>오너끼리 안 맞으면 캐 서사가 어떻든 안 맞다고 생각합니다. 서사충까지는 아닌데, 러닝 중 대화가 0인데 갑작스러운 계약관계 당황스러워합니다…. 오너끼리 웬만큼 친해지지 않은 이상(연공 후 대화를 조금 나눠봤다면 친한 거지요^0^) 계연 등의 계약 관계는 제안 주시지 않는 편이 좋아요. 오너끼리 친해진 후라면 어떠한 날조도 다 쳐먹습니다…. 제가 먼저 제안하기도 합니다. 불편하다면 말씀해주세요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>제가 드린 그림, 글, 커미션 등은 저랑 계속 연락을 하고 지내는 사이라면 언제 어디서든 편하게 저장하고 업로드 하셔도 괜찮아요. (다만 n년 전 그림만큼은 조금….) <b>저랑 연락이 끊겼다면, 제가 드린 모든 작업물은 사용하지 말아주세요.</b> 정당하게 돈을 주고 받은 커미션의 경우에만 업로드 합니다. 앞서 말씀 드린 것들, 저 역시 그렇게 하고 있으니 혹시 불편하시다면 말씀해주세요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>커뮤 러닝 후 연공은 연공계에서 합니다. 이후 본계로 사람 많이 안 데려와요. 최대 3명 정도…. 최종적으로 연공하지 않은 캐릭터들과 징검다리로 어찌저찌 함께 커미션 넣는 건 무척 좋아하는데, 제 본계정을 알리고 싶지 않으니 저를 포함한 DM방 생성은 조심해주세요.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>러닝이 끝난 후 모든 캐릭터 신청서는 공유 금지로 변경해둡니다. 다시 보고 싶으시다면 편하게 말씀해주세요.</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="frame">
-                <div class="title">
-                    <h4>CHARACTER</h4>
-                </div>
-
-                <div class="subtitle">
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p><a href="https://docs.google.com/document/d/1DNcl2mwDtCDKwStWjejDJ7soFV5TQtKKp3sxy4fmSc4/edit?usp=sharing">자세한 러닝 목록은 이쪽</a><br>
-                            <a href="https://docs.google.com/document/d/1vxG_RdOzKi-SgFj8HSmUtKVIxFdTlLya-LcZ6F4x94M/edit?usp=sharing">캐릭터 생일 정리는 이쪽</a><br>
-                            <a href="http://drive.google.com/uc?export=view&id=1kss3q_XIC5O97D3MSGiSjkhc1OMJcjP0">자캐 정리는 이쪽 (임시)</a> 2022.12.09에 수정함
-                        </p>
-
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>관계가 있고, 자주 언급하는 캐릭터만 정리해두었습니다.</p>
-                    </div>
-
-                    <div class="content">
-                        <h4>♡</h4>
-                        <p>
-                            우리가 함께했던 여름   ::   아오노 하나비 ( 💚❤️💚 나오에 아카네 )<br>
-                            다섯번째 계절   ::   나츠 아오이 ( 💙💛 센자키 유우신 )<br>
-                            겨울, 끝자락   ::   하나미 시즈카<br>
-                            로망스키   ::   히토츠하라 카요<br>
-                            스텝과 블룸   ::   에노사키 세리나
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
         </article>
     </section>
 </body>
+
+
+<script>
+    const buttons = document.querySelectorAll(".tab-button");
+    const contents = document.querySelector(".tab-contents");
+    const frames = document.querySelectorAll(".frame");
+    const wrapper = document.querySelector(".slider-wrapper");
+    const infoSection = document.querySelector(".secondinfo");
+    const totalTabs = buttons.length;
+  
+    let currentIndex = 0;
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+  
+    function updateHeight() {
+      const activeFrame = frames[currentIndex];
+      
+      // 실제 높이를 측정할 임시 clone 요소 생성
+      const clone = activeFrame.cloneNode(true);
+      clone.style.position = "absolute";
+      clone.style.visibility = "hidden";
+      clone.style.pointerEvents = "none";
+      clone.style.height = "auto";
+      clone.style.width = wrapper.offsetWidth + "px";
+  
+      infoSection.appendChild(clone);
+      const height = clone.offsetHeight;
+      infoSection.removeChild(clone);
+  
+      infoSection.style.height = `${height}px`;
+    }
+  
+    function setPositionByIndex() {
+      const offset = -currentIndex * wrapper.offsetWidth;
+      contents.style.transition = "transform 0.3s ease";
+      contents.style.transform = `translateX(${offset}px)`;
+      prevTranslate = offset;
+  
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      buttons[currentIndex].classList.add("active");
+  
+      updateHeight();
+    }
+  
+    buttons.forEach((btn, idx) => {
+      btn.addEventListener("click", () => {
+        currentIndex = idx;
+        setPositionByIndex();
+      });
+    });
+  
+    wrapper.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.pageX;
+      contents.style.transition = "none";
+    });
+  
+    window.addEventListener("mouseup", (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const moved = e.pageX - startX;
+      if (moved < -50 && currentIndex < totalTabs - 1) {
+        currentIndex++;
+      } else if (moved > 50 && currentIndex > 0) {
+        currentIndex--;
+      }
+      setPositionByIndex();
+    });
+  
+    window.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      const moved = e.pageX - startX;
+      currentTranslate = prevTranslate + moved;
+      contents.style.transform = `translateX(${currentTranslate}px)`;
+    });
+  
+    window.addEventListener("load", () => {
+      setPositionByIndex();
+    });
+  </script>
+  
+  
+  
+  
 </html>
