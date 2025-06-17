@@ -6,6 +6,18 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Ownglyph_ParkDaHyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'LeeSeoyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 * {
@@ -257,10 +269,10 @@ article {
 
 .subtitle .content h4 {
     color: #98C930;
-    font-family: SUIT-Regular;
-    font-size: 0.8rem;
+    font-family: LeeSeoyun;
+    font-size: 1rem;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     line-height: normal;
 } 
 
