@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Inter:wght@700&display=swap');
+
 @font-face {
   font-family: 'KoPubWorldDotum';
   src: url('https://cdn.jsdelivr.net/npm/font-kopub@1.0/KopubDotumMedium.woff') format('woff');
@@ -23,12 +24,18 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
 
 
 * {
     padding: 0;
     margin: 0;
-    font-family: 'KoPubWorldDotum';
+    font-family: 'Pretendard-Regular';
     box-sizing: border-box;
     scroll-behavior: smooth;
   }
@@ -186,7 +193,7 @@ article {
     padding: 0.5rem 1rem;
     cursor: pointer;
     position: relative;
-    font-family: 'KoPubWorldDotum';
+    font-family: 'Pretendard-Regular';
 }
   
 .tab-button.active::after {
