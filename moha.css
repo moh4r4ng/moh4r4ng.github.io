@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Inter:wght@700&display=swap');
-@import "//cdn.jsdelivr.net/npm/font-kopub@1.0";
+@font-face {
+  font-family: 'KoPubWorldDotum';
+  src: url('https://cdn.jsdelivr.net/npm/font-kopub@1.0/KopubDotumMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 @font-face {
     font-family: 'SUIT-Regular';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
