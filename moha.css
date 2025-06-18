@@ -35,7 +35,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: 'Pretendard-Regular';
+    font-family: 'KoPubWorldDotum', sans-serif;
     box-sizing: border-box;
     scroll-behavior: smooth;
   }
@@ -193,7 +193,7 @@ article {
     padding: 0.5rem 1rem;
     cursor: pointer;
     position: relative;
-    font-family: 'Pretendard-Regular';
+    font-family: 'KoPubWorldDotum', sans-serif;
 }
   
 .tab-button.active::after {
