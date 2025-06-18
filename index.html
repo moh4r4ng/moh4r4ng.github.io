@@ -209,6 +209,7 @@
 <body>
     <section class="first">
         <article class="firstinfo">
+          <audio src="우연소(遇緣所) - 여름별.mp3" autoplay loop controls id="myAudio" style="max-width: 30rem; height: 1.875rem; font-family: 'LeeSeoyun';"></audio>
             <div>
                 <img src="@Mingsu_mi.png">
                 <p class="source">CREPE @Mingsu_mi</p>  
@@ -521,85 +522,109 @@
 
 
 <script>
-    const buttons = document.querySelectorAll(".tab-button");
-    const contents = document.querySelector(".tab-contents");
-    const frames = document.querySelectorAll(".frame");
-    const wrapper = document.querySelector(".slider-wrapper");
-    const infoSection = document.querySelector(".secondinfo");
-    const totalTabs = buttons.length;
-  
-    let currentIndex = 0;
-    let isDragging = false;
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-  
-    function updateHeight() {
-      const activeFrame = frames[currentIndex];
-      
-      // 실제 높이를 측정할 임시 clone 요소 생성
-      const clone = activeFrame.cloneNode(true);
-      clone.style.position = "absolute";
-      clone.style.visibility = "hidden";
-      clone.style.pointerEvents = "none";
-      clone.style.height = "auto";
-      clone.style.width = wrapper.offsetWidth + "px";
-  
-      infoSection.appendChild(clone);
-      const height = clone.offsetHeight;
-      infoSection.removeChild(clone);
-  
-      infoSection.style.height = `${height}px`;
-    }
-  
-    function setPositionByIndex() {
-      const offset = -currentIndex * wrapper.offsetWidth;
-      contents.style.transition = "transform 0.3s ease";
-      contents.style.transform = `translateX(${offset}px)`;
-      prevTranslate = offset;
-  
-      buttons.forEach((btn) => btn.classList.remove("active"));
-      buttons[currentIndex].classList.add("active");
-  
-      updateHeight();
-    }
-  
-    buttons.forEach((btn, idx) => {
-      btn.addEventListener("click", () => {
-        currentIndex = idx;
-        setPositionByIndex();
-      });
-    });
-  
-    wrapper.addEventListener("mousedown", (e) => {
-      isDragging = true;
-      startX = e.pageX;
-      contents.style.transition = "none";
-    });
-  
-    window.addEventListener("mouseup", (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      const moved = e.pageX - startX;
-      if (moved < -50 && currentIndex < totalTabs - 1) {
-        currentIndex++;
-      } else if (moved > 50 && currentIndex > 0) {
-        currentIndex--;
-      }
+  const buttons = document.querySelectorAll(".tab-button");
+  const contents = document.querySelector(".tab-contents");
+  const frames = document.querySelectorAll(".frame");
+  const wrapper = document.querySelector(".slider-wrapper");
+  const infoSection = document.querySelector(".secondinfo");
+  const totalTabs = buttons.length;
+
+  let currentIndex = 0;
+  let isDragging = false;
+  let startX = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+
+  function updateHeight() {
+    const activeFrame = frames[currentIndex];
+    const clone = activeFrame.cloneNode(true);
+    clone.style.position = "absolute";
+    clone.style.visibility = "hidden";
+    clone.style.pointerEvents = "none";
+    clone.style.height = "auto";
+    clone.style.width = wrapper.offsetWidth + "px";
+    infoSection.appendChild(clone);
+    const height = clone.offsetHeight;
+    infoSection.removeChild(clone);
+    infoSection.style.height = `${height}px`;
+  }
+
+  function setPositionByIndex() {
+    const offset = -currentIndex * wrapper.offsetWidth;
+    contents.style.transition = "transform 0.3s ease";
+    contents.style.transform = `translateX(${offset}px)`;
+    prevTranslate = offset;
+
+    buttons.forEach((btn) => btn.classList.remove("active"));
+    buttons[currentIndex].classList.add("active");
+
+    updateHeight();
+  }
+
+  buttons.forEach((btn, idx) => {
+    btn.addEventListener("click", () => {
+      currentIndex = idx;
       setPositionByIndex();
     });
-  
-    window.addEventListener("mousemove", (e) => {
-      if (!isDragging) return;
-      const moved = e.pageX - startX;
-      currentTranslate = prevTranslate + moved;
-      contents.style.transform = `translateX(${currentTranslate}px)`;
-    });
-  
-    window.addEventListener("load", () => {
-      setPositionByIndex();
-    });
-  </script>
+  });
+
+  // 마우스용
+  wrapper.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.pageX;
+    contents.style.transition = "none";
+  });
+
+  window.addEventListener("mouseup", (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const moved = e.pageX - startX;
+    handleSwipeEnd(moved);
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    const moved = e.pageX - startX;
+    currentTranslate = prevTranslate + moved;
+    contents.style.transform = `translateX(${currentTranslate}px)`;
+  });
+
+  // 터치용
+  wrapper.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    startX = e.touches[0].pageX;
+    contents.style.transition = "none";
+  });
+
+  wrapper.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const moved = e.touches[0].pageX - startX;
+    currentTranslate = prevTranslate + moved;
+    contents.style.transform = `translateX(${currentTranslate}px)`;
+  });
+
+  wrapper.addEventListener("touchend", (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const moved = currentTranslate - prevTranslate;
+    handleSwipeEnd(moved);
+  });
+
+  // 공통 스와이프 처리
+  function handleSwipeEnd(moved) {
+    if (moved < -50 && currentIndex < totalTabs - 1) {
+      currentIndex++;
+    } else if (moved > 50 && currentIndex > 0) {
+      currentIndex--;
+    }
+    setPositionByIndex();
+  }
+
+  window.addEventListener("load", () => {
+    setPositionByIndex();
+  });
+</script>
+
   
   
   
