@@ -181,6 +181,7 @@ article {
     padding: 0.5rem 1rem;
     cursor: pointer;
     position: relative;
+    font-family: 'KoPubWorldDotum';
 }
   
 .tab-button.active::after {
