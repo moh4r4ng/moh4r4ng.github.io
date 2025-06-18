@@ -282,3 +282,164 @@ article {
     line-height: 1.5rem;
     letter-spacing: -0.03438rem;
 }
+
+
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+  section {
+    width: 100%;
+    max-width: 90%;
+    padding: 2rem 2rem;
+    border-radius: 1.25rem;
+  }
+
+  .first, .second {
+    margin: 2rem auto;
+  }
+
+  article, .subtitle {
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .subtitle {
+    gap: 2rem;
+  }
+
+  .subtitle .content {
+    gap: 0.7rem;
+  }
+
+  .name h2 {
+    font-size: 3.75rem; /* 1.5배 */
+  }
+
+  .name h5 {
+    font-size: 1.05rem;
+  }
+
+  .firstinfo h5 {
+    font-size: 0.9rem;
+  }
+
+  .tab-menu button {
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+  }
+
+  .tab-wrapper {
+    padding: 0.75rem;
+  }
+
+  .frame {
+    padding: 0 1rem;
+  }
+
+  .subtitle .content p {
+    font-size: 1.275rem;
+    line-height: 1.9rem;
+  }
+
+  #likehate {
+    gap: 4rem;
+  }
+
+  .like, .hate {
+    gap: 1.25rem;
+  }
+
+  img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+
+  section {
+    width: 100%;
+    max-width: 90%; /* 좌우 여백 확보 */
+    padding: 1.5rem 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .first, .second {
+    margin: 1.5rem auto;
+  }
+
+  article, .subtitle {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .subtitle {
+    gap: 1.5rem;
+  }
+
+  .subtitle .content {
+    gap: 0.5rem;
+  }
+
+  img {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+  }
+
+  .name h2 {
+    font-size: 3.375rem; /* 기존 2.25rem → 1.5배 */
+  }
+
+  .name h5 {
+    font-size: 0.975rem;
+  }
+
+  .firstinfo h5 {
+    font-size: 0.75rem;
+  }
+
+  
+  .tab-wrapper {
+    padding: 0.5rem 0.5rem;
+    width: 100%;
+    overflow-x: hidden; /* ✅ 가로 스크롤 완전 차단 */
+  }
+
+  .tab-menu {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap; /* ✅ 줄바꿈 안 함 */
+    justify-content: space-between; /* ✅ 여백 없이 균등 배치 */
+  }
+
+  .tab-menu button {
+    flex: 1 1 0;
+    text-align: center;
+    font-size: 0.65rem; /* ✅ 모바일용 작은 글씨 */
+    padding: 0.3rem 0.2rem;
+    min-width: 0; /* ✅ 너무 긴 텍스트도 줄어듦 */
+    white-space: nowrap; /* ✅ 줄바꿈 절대 금지 */
+  }
+
+  .frame {
+    padding: 0 0.5rem;
+  }
+
+  .subtitle .content p {
+    line-height: 1.6rem;
+  }
+
+  #likehate {
+    gap: 3rem;
+  }
+
+  .like, .hate {
+    gap: 1rem;
+  }
+}
